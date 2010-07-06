@@ -1,19 +1,21 @@
 <?php
 
 class rangeFinder {
-	public $datapoints = array();
-	public $range = array();
-	public $final = array();
+	public $datapoints = array(); // Given set of datapoints
+	public $range = array(); // Derived ranges
+	public $final = array(); // Final set of ranges and means
 
 	function __construct($datapoints) {
 		$this->datapoints = $datapoints;
 	}
 
+	// Execute data_range and smaller_range
 	function find() {
 		$this->data_range();
 		$this->smaller_range();
 	}
 
+	// Determines data ranges from datapoints
 	function data_range () {
 		$range = array();
 		
@@ -21,6 +23,8 @@ class rangeFinder {
 		
 		for ($i=1; $i < $count; $i++) {
 			$x = $this->datapoints[$i] - $this->datapoints[$i-1];
+
+			// Make range an unsigned number
 			if ($x < 0) {
 				$x = $x - ($x * 2);
 			}
@@ -29,27 +33,38 @@ class rangeFinder {
 		}
 	}
 	
+	// Determines if previous range is smaller than the current
 	function smaller_range() {
-		$prior = '';
 		foreach ($this->range as $key=>$data) {
-			if($prior && $prior <= $data) {
+			// Check to see if this isn't the first pass and if the value is less than / equal than the previous
+			if($this->range[$key - 1] && $this->range[$key - 1] <= $data) {
+				// Display current datapoints and ranges
 				echo "x = [" . implode(' ', $this->datapoints) . "]\n";
 				echo "r = [" . implode(' ', $this->range) . "]\n";
+
+				// Display values were removing from datapoints
 				echo "Deleting: " . $this->datapoints[$key] . " & " . $this->datapoints[$key - 1] . "\n";
-				$item['range'] = $prior;
+				$item['range'] = $this->range[$key - 1];
 				$item['mean'] = ($this->datapoints[$key] - $this->datapoints[$key - 1]) / 2;
-				echo "Range: " . $prior . "\n";
+
+				// Display current range and mean
+				echo "Range: " . $this->range[$key - 1] . "\n";
 				echo "Mean: " . $item['mean'] . "\n\n";
+
+				// Set value for final set
 				$this->final[] = $item;
+
+				// Remove relevant datapoints
 				unset($this->datapoints[$key]);
 				unset($this->datapoints[$key - 1]);
+
+				// Rekey datapoints index
 				$this->datapoints = array_values($this->datapoints);
 				break;
 			}
-		
-			$prior = $data;
 		}
 
+		// Reset array
 		$this->range = array();
 	}
 }
