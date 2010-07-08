@@ -11,8 +11,11 @@ class rangeFinder {
 
 	// Execute data_range and smaller_range
 	function find() {
-		$this->data_range();
-		$this->smaller_range();
+	// Find ranges and means
+		while(count($this->datapoints) >= 3) {
+			$this->data_range();
+			$this->smaller_range();
+		}
 	}
 
 	// Determines data ranges from datapoints
@@ -37,7 +40,7 @@ class rangeFinder {
 	function smaller_range() {
 		foreach ($this->range as $key=>$data) {
 			// Check to see if this isn't the first pass and if the value is less than / equal than the previous
-			if($this->range[$key - 1] && $this->range[$key - 1] <= $data) {
+			if($key != 0 && $this->range[$key - 1] <= $data) {
 				// Display current datapoints and ranges
 				echo "x = [" . implode(' ', $this->datapoints) . "]\n";
 				echo "r = [" . implode(' ', $this->range) . "]\n";
