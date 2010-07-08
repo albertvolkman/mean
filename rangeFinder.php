@@ -41,8 +41,6 @@ class rangeFinder {
 		foreach ($this->range as $key=>$data) {
 			// Check to see if this isn't the first pass and if the value is less than / equal than the previous
 			if($key != 0 && $this->range[$key - 1] <= $data) {
-				// Display current datapoints and ranges
-
 				// Display values were removing from datapoints
 				$item['datapoints'] = "x = [" . implode(' ', $this->datapoints) . "]";
 				$item['ranges'] = "r = [" . implode(' ', $this->range) . "]";
