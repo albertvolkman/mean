@@ -42,17 +42,14 @@ class rangeFinder {
 			// Check to see if this isn't the first pass and if the value is less than / equal than the previous
 			if($key != 0 && $this->range[$key - 1] <= $data) {
 				// Display current datapoints and ranges
-				echo "x = [" . implode(' ', $this->datapoints) . "]\n";
-				echo "r = [" . implode(' ', $this->range) . "]\n";
 
 				// Display values were removing from datapoints
-				echo "Deleting: " . $this->datapoints[$key] . " & " . $this->datapoints[$key - 1] . "\n";
+				$item['datapoints'] = "x = [" . implode(' ', $this->datapoints) . "]";
+				$item['ranges'] = "r = [" . implode(' ', $this->range) . "]";
+				$item['datapoint1'] = $this->datapoints[$key - 1];
+				$item['datapoint2'] = $this->datapoints[$key];
 				$item['range'] = $this->range[$key - 1];
 				$item['mean'] = ($this->datapoints[$key] - $this->datapoints[$key - 1]) / 2;
-
-				// Display current range and mean
-				echo "Range: " . $this->range[$key - 1] . "\n";
-				echo "Mean: " . $item['mean'] . "\n\n";
 
 				// Set value for final set
 				$this->final[] = $item;
