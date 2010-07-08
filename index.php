@@ -1,13 +1,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>Test</title>
+	<title>Mean Finder</title>
+	<script type="text/javascript">
+			function clearResults() {
+				document.getElementById('results').innerHTML = '';
+			}
+	</script>
 </head>
 <body>
-	<form action="index.php" method="post">
-		<input type="text" name="datapoints" title="test" />
-		<input type="submit" value="Submit" />	
-	</form>
+	<h1>Mean Finder</h1>
+	<fieldset>
+		<form action="index.php" method="post">
+			<label for="datapoints">Enter a comma separated list of datapoints.</label>
+			<input type="text" id="datapoints" name="datapoints" title="test" style="width:200px" />
+			<input type="submit" value="Submit" />
+			<button type="button" id="clear" onclick="clearResults()">Clear</button>
+		</form>
+	</fieldset>
+	<fieldset id="results">
 <?php
 if ($_POST['datapoints']) {
 	// Include our rangefinder class
@@ -40,6 +51,6 @@ if ($_POST['datapoints']) {
 	echo "</table>";
 }
 ?>
-
+	</fieldset>
 </body>
 </html>
